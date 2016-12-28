@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GetNinjas - Internship Test</string>
+    <string name="fragment_offers_test">Hello offers fragment</string>
+    <string name="fragment_leads_test">Hello leads fragment</string>
 </resources>
