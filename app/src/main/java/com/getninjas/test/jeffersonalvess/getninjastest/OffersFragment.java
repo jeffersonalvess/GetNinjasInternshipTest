@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,19 @@ public class OffersFragment extends Fragment {
             OffersAdapter adapter = new OffersAdapter(getActivity(), offers);
             rvOffers.setAdapter(adapter);
             rvOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            if (offers.size() < 1) {
+                final Snackbar snackBar = Snackbar.make(rvOffers, "Ooops, your internet connection might not be working.", Snackbar.LENGTH_INDEFINITE);
+
+                snackBar.setAction("Ok", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackBar.dismiss();
+                    }
+                });
+                snackBar.show();
+            }
+
         }
         catch (IOException e) {
             e.printStackTrace();

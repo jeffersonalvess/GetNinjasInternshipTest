@@ -1,5 +1,6 @@
 package com.getninjas.test.jeffersonalvess.getninjastest;
 
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -142,8 +143,9 @@ public class Offer {
 
             }
         }
-        finally {
-
+        catch (Exception e)
+        {
+            return offers;
         }
 
         return offers;
