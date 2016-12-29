@@ -1,6 +1,15 @@
 package com.getninjas.test.jeffersonalvess.getninjastest;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by jeffersonalvess on 12/28/16.
@@ -9,7 +18,7 @@ import java.util.Date;
 public class Offer {
 
     private String state;
-    private Date createdAt;
+    private String createdAt;
     private String title;
     private String userName;
     private String city;
@@ -20,7 +29,7 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(String state, Date createdAt, String title, String userName, String city, String neighborhood, String uf, String selfLink) {
+    public Offer(String state, String createdAt, String title, String userName, String city, String neighborhood, String uf, String selfLink) {
         this.state = state;
         this.createdAt = createdAt;
         this.title = title;
@@ -39,11 +48,11 @@ public class Offer {
         this.state = state;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -93,5 +102,50 @@ public class Offer {
 
     public void setSelfLink(String selfLink) {
         this.selfLink = selfLink;
+    }
+
+
+    //  This section populates a ArrayList with Offers
+    public static ArrayList<Offer> createOffersList(String uri) throws IOException, JSONException, ExecutionException, InterruptedException {
+        ArrayList<Offer> offers = new ArrayList<Offer>();
+
+        JSONParser jsonParser = new JSONParser();
+
+        try {
+            JSONObject json = new RetrieveJSONTask().execute(uri).get();
+            JSONArray jsonArray = new JSONArray(json.optString("offers"));
+
+            Log.i(MainActivity.class.getName(),
+                    "Number of entries " + jsonArray.length());
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jO = jsonArray.getJSONObject(i);
+
+                Offer offer = new Offer();
+
+                offer.setState(jO.optString("state"));
+
+                offer.setCreatedAt(jO.getJSONObject("_embedded").getJSONObject("request").optString("created_at"));
+                offer.setTitle(jO.getJSONObject("_embedded").getJSONObject("request").optString("title"));
+
+                offer.setUserName(jO.getJSONObject("_embedded").getJSONObject("request").getJSONObject("_embedded").getJSONObject("user").optString("name"));
+
+                offer.setCity(jO.getJSONObject("_embedded").getJSONObject("request").getJSONObject("_embedded").getJSONObject("address").optString("city"));
+                offer.setNeighborhood(jO.getJSONObject("_embedded").getJSONObject("request").getJSONObject("_embedded").getJSONObject("address").optString("neighborhood"));
+                offer.setUf(jO.getJSONObject("_embedded").getJSONObject("request").getJSONObject("_embedded").getJSONObject("address").optString("uf"));
+
+
+                offer.setSelfLink(jO.getJSONObject("_links").getJSONObject("self").optString("href"));
+
+
+                offers.add(offer);
+
+            }
+        }
+        finally {
+
+        }
+
+        return offers;
     }
 }
