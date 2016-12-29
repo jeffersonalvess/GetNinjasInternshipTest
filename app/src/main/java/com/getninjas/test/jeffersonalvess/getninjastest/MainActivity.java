@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new OffersFragment(), "DISPONÍVEIS");
         adapter.addFragment(new LeadsFragment(), "ACEITOS");
         viewPager.setAdapter(adapter);
+
     }
 
 
@@ -76,5 +77,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
 }
+
+//        A code for snackbar, it will be useful to implement internet connection check.
+//        if (leads.size() < 1) {
+//            final Snackbar snackBarLeads = Snackbar.make(rvLeads, "Ooops, it was not possible to retrieve your leads at this moment.", Snackbar.LENGTH_INDEFINITE);
+//
+//            snackBarLeads.setAction("Ok", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    snackBarLeads.dismiss();
+//                }
+//            });
+//            snackBarLeads.show();
+//        }
+
+
+
+

@@ -116,9 +116,6 @@ public class Offer {
             JSONObject json = new RetrieveJSONTask().execute(uri).get();
             JSONArray jsonArray = new JSONArray(json.optString("offers"));
 
-            Log.i(MainActivity.class.getName(),
-                    "Number of entries " + jsonArray.length());
-
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jO = jsonArray.getJSONObject(i);
 
