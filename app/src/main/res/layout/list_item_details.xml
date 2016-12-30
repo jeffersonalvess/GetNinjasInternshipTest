@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_info"
+            android:id="@+id/imgDetailsInfoIcon"
             android:layout_weight="0" />
 
         <TextView
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:id="@+id/txtDetailsLocation"
+            android:id="@+id/txtDetailsInfoLabel"
             android:layout_weight="0"
             android:textStyle="bold"
             android:textColor="@color/cardText"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="25dp"
-        android:id="@+id/txtDetailsDistance"
+        android:id="@+id/txtDetailsInfoValue"
         android:layout_weight="0"
         android:textAlignment="viewStart"
         android:textSize="12dp"/>

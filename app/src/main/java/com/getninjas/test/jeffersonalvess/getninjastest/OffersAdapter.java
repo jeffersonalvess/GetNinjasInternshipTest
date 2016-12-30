@@ -38,8 +38,9 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
         public ImageView imgViewLocation;
 
         Context context;
+        List<Offer> offers;
 
-        public ViewHolder(View itemView, Context context) {
+        public ViewHolder(View itemView, Context context, List<Offer> offers) {
             super(itemView);
 
             txtCardTitle = (TextView) itemView.findViewById(R.id.txtCardTitle);
@@ -52,6 +53,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
             imgViewLocation = (ImageView) itemView.findViewById(R.id.imageViewLocation);
 
             this.context = context;
+            this.offers = offers;
 
             itemView.setOnClickListener(this);
         }
@@ -60,10 +62,11 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
         public void onClick(View view) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                //  We can access the data within the views
-                //  TODO: Implement a way to send data to this activity
-                //  TODO: Replicate this code into LeadsAdapter
                 Intent intent = new Intent(context, DetailsActivity.class);
+
+                intent.putExtra("from", "Offer");
+                intent.putExtra("link", offers.get(position).getSelfLink());
+
                 context.startActivity(intent);
             }
         }
@@ -93,7 +96,7 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
         View offerView = inflater.inflate(R.layout.list_item_card, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(offerView, context);
+        ViewHolder viewHolder = new ViewHolder(offerView, context, mOffers);
         return viewHolder;
     }
 

@@ -1,6 +1,7 @@
 package com.getninjas.test.jeffersonalvess.getninjastest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,8 +37,9 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.ViewHolder> 
         public ImageView imgViewLocation;
 
         Context context;
+        List<Lead> leads;
 
-        public ViewHolder(View itemView, Context context) {
+        public ViewHolder(View itemView, Context context, List<Lead> leads) {
             super(itemView);
 
             txtCardTitle = (TextView) itemView.findViewById(R.id.txtCardTitle);
@@ -50,6 +52,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.ViewHolder> 
             imgViewLocation = (ImageView) itemView.findViewById(R.id.imageViewLocation);
 
             this.context = context;
+            this.leads = leads;
 
             itemView.setOnClickListener(this);
         }
@@ -58,9 +61,12 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.ViewHolder> 
         public void onClick(View view) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
-                //  We can access the data within the views
-                //  Try to get an list item from mOffers
-                Toast.makeText(context, "Touched " + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DetailsActivity.class);
+
+                intent.putExtra("from", "Lead");
+                intent.putExtra("link", leads.get(position).getSelfLink());
+
+                context.startActivity(intent);
             }
         }
     }
@@ -89,7 +95,7 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.ViewHolder> 
         View leadView = inflater.inflate(R.layout.list_item_card, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(leadView, context);
+        ViewHolder viewHolder = new ViewHolder(leadView, context, mLeads);
         return viewHolder;
     }
 
