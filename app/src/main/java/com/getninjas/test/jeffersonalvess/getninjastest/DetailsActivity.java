@@ -1,7 +1,10 @@
 package com.getninjas.test.jeffersonalvess.getninjastest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,6 +28,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -54,55 +59,11 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         // Inflating top and bottom information
-        TextView txtDetailsTitle = (TextView) findViewById(R.id.txtDetailsTitle);
-        TextView txtDetailsUser = (TextView) findViewById(R.id.txtDetailsUser);
-        TextView txtDetailsLocation = (TextView) findViewById(R.id.txtDetailsLocation);
-        TextView txtDetailsDistance = (TextView) findViewById(R.id.txtDetailsDistance);
-        TextView txtDetailsPhone = (TextView) findViewById(R.id.txtDetailsPhone);
-        TextView txtDetailsEmail = (TextView) findViewById(R.id.txtDetailsEmail);
-        TextView txtDetailsContactTitle = (TextView) findViewById(R.id.txtDetailsContactTitle);
+        inflateLayoutOutsideList();
 
-        ImageView imgDetailsPerson = (ImageView) findViewById(R.id.imgDetailsPerson);
-        ImageView imgDetailsLocation= (ImageView) findViewById(R.id.imgDetailsLocation);
-        ImageView imgDetailsPhone = (ImageView) findViewById(R.id.imgDetailsPhone);
-        ImageView imgDetailsEmail = (ImageView) findViewById(R.id.imgDetailsEmail);
+        //  Configuring the buttons on screen's bottom
+        inflateBottomButtons();
 
-        LinearLayout llDetailsClientContact = (LinearLayout) findViewById(R.id.llDetailsClientContact);
-
-
-        double distance = details.getDistance()/10000;
-
-        txtDetailsTitle.setText(details.getTitle());
-        txtDetailsUser.setText(details.getName());
-        txtDetailsLocation.setText(details.getNeighborhood() + " - " + details.getCity());
-        txtDetailsDistance.setText("about " + String.valueOf(distance) + " km from you.");
-        txtDetailsPhone.setText(details.getPhone());
-        txtDetailsEmail.setText(details.getEmail());
-
-        if (from.equals("Offer")) {
-            imgDetailsPerson.setColorFilter(Color.parseColor("#0091ea"));
-            imgDetailsLocation.setColorFilter(Color.parseColor("#0091ea"));
-            imgDetailsPhone.setColorFilter(Color.parseColor("#FFFFFF"));
-            imgDetailsEmail.setColorFilter(Color.parseColor("#FFFFFF"));
-
-            txtDetailsPhone.setTextColor(Color.parseColor("#FFFFFF"));
-            txtDetailsEmail.setTextColor(Color.parseColor("#FFFFFF"));
-            txtDetailsContactTitle.setTextColor(Color.parseColor("#FFFFFF"));
-
-            llDetailsClientContact.setBackgroundColor(Color.parseColor("#4ec6fe"));
-        }
-        else {
-            imgDetailsPerson.setColorFilter(Color.parseColor("#90e135"));
-            imgDetailsLocation.setColorFilter(Color.parseColor("#90e135"));
-            imgDetailsPhone.setColorFilter(Color.parseColor("#000000"));
-            imgDetailsEmail.setColorFilter(Color.parseColor("#000000"));
-
-            txtDetailsPhone.setTextColor(Color.parseColor("#000000"));
-            txtDetailsEmail.setTextColor(Color.parseColor("#000000"));
-            txtDetailsContactTitle.setTextColor(Color.parseColor("#000000"));
-
-            llDetailsClientContact.setBackgroundColor(Color.parseColor("#c8f57e"));
-        }
     }
 
     public Detail getDetailsInfo(String uri) {
@@ -184,6 +145,127 @@ public class DetailsActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void inflateLayoutOutsideList() {
+        TextView txtDetailsTitle = (TextView) findViewById(R.id.txtDetailsTitle);
+        TextView txtDetailsUser = (TextView) findViewById(R.id.txtDetailsUser);
+        TextView txtDetailsLocation = (TextView) findViewById(R.id.txtDetailsLocation);
+        TextView txtDetailsDistance = (TextView) findViewById(R.id.txtDetailsDistance);
+        TextView txtDetailsPhone = (TextView) findViewById(R.id.txtDetailsPhone);
+        TextView txtDetailsEmail = (TextView) findViewById(R.id.txtDetailsEmail);
+        TextView txtDetailsContactTitle = (TextView) findViewById(R.id.txtDetailsContactTitle);
+
+        ImageView imgDetailsPerson = (ImageView) findViewById(R.id.imgDetailsPerson);
+        ImageView imgDetailsLocation= (ImageView) findViewById(R.id.imgDetailsLocation);
+        ImageView imgDetailsPhone = (ImageView) findViewById(R.id.imgDetailsPhone);
+        ImageView imgDetailsEmail = (ImageView) findViewById(R.id.imgDetailsEmail);
+
+        LinearLayout llDetailsClientContact = (LinearLayout) findViewById(R.id.llDetailsClientContact);
+
+
+        double distance = details.getDistance()/10000;
+
+        txtDetailsTitle.setText(details.getTitle());
+        txtDetailsUser.setText(details.getName());
+        txtDetailsLocation.setText(details.getNeighborhood() + " - " + details.getCity());
+        txtDetailsDistance.setText("about " + String.valueOf(distance) + " km from you.");
+        txtDetailsPhone.setText(details.getPhone());
+        txtDetailsEmail.setText(details.getEmail());
+
+        if (from.equals("Offer")) {
+            imgDetailsPerson.setColorFilter(Color.parseColor("#0091ea"));
+            imgDetailsLocation.setColorFilter(Color.parseColor("#0091ea"));
+            imgDetailsPhone.setColorFilter(Color.parseColor("#FFFFFF"));
+            imgDetailsEmail.setColorFilter(Color.parseColor("#FFFFFF"));
+
+            txtDetailsPhone.setTextColor(Color.parseColor("#FFFFFF"));
+            txtDetailsEmail.setTextColor(Color.parseColor("#FFFFFF"));
+            txtDetailsContactTitle.setTextColor(Color.parseColor("#FFFFFF"));
+
+            llDetailsClientContact.setBackgroundColor(Color.parseColor("#4ec6fe"));
+        }
+        else {
+            imgDetailsPerson.setColorFilter(Color.parseColor("#90e135"));
+            imgDetailsLocation.setColorFilter(Color.parseColor("#90e135"));
+            imgDetailsPhone.setColorFilter(Color.parseColor("#000000"));
+            imgDetailsEmail.setColorFilter(Color.parseColor("#000000"));
+
+            txtDetailsPhone.setTextColor(Color.parseColor("#000000"));
+            txtDetailsEmail.setTextColor(Color.parseColor("#000000"));
+            txtDetailsContactTitle.setTextColor(Color.parseColor("#000000"));
+
+            llDetailsClientContact.setBackgroundColor(Color.parseColor("#c8f57e"));
+        }
+    }
+
+    private void inflateBottomButtons() {
+
+        LinearLayout buttonLeft = (LinearLayout) findViewById(R.id.llbtnLeft);
+        LinearLayout buttonRight = (LinearLayout) findViewById(R.id.llbtnRight);
+
+        ImageView imgLeft = (ImageView) findViewById(R.id.imgbtnLeft);
+        ImageView imgRight = (ImageView) findViewById(R.id.imgbtnRight);
+
+        TextView txtLeft = (TextView) findViewById(R.id.txtbtnLeft);
+        TextView txtRight = (TextView) findViewById(R.id.txtbtnRight);
+
+
+        if (from.equals("Offer"))
+        {
+            imgLeft.setImageResource(R.drawable.ic_close);
+            txtLeft.setText("REFUSE");
+
+            imgRight.setImageResource(R.drawable.ic_accept);
+            txtRight.setText("ACCEPT");
+
+            buttonLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+
+            buttonRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+
+                    intent.putExtra("from", "Lead");
+                    intent.putExtra("link", details.getLinkAccept());
+                    intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+
+                    finish();
+                    startActivity(intent);
+
+                }
+            });
+        }
+        else
+        {
+            imgLeft.setImageResource(R.drawable.ic_phone);
+            txtLeft.setText("CALL");
+
+            imgRight.setImageResource(R.drawable.ic_sms);
+            txtRight.setText("WHATSAPP");
+
+            buttonLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", details.getPhone(), null));
+                    startActivity(intent);
+                }
+            });
+
+            buttonRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + details.getPhone()));
+                    intent.setPackage("com.whatsapp");
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
 }
