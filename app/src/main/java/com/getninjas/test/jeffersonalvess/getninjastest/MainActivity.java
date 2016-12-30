@@ -1,5 +1,6 @@
 package com.getninjas.test.jeffersonalvess.getninjastest;
 
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,7 +9,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -79,18 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
 }
 
-//        A code for snackbar, it will be useful to implement internet connection check.
-//        if (leads.size() < 1) {
-//            final Snackbar snackBarLeads = Snackbar.make(rvLeads, "Ooops, it was not possible to retrieve your leads at this moment.", Snackbar.LENGTH_INDEFINITE);
-//
-//            snackBarLeads.setAction("Ok", new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    snackBarLeads.dismiss();
-//                }
-//            });
-//            snackBarLeads.show();
-//        }
 
 
 
