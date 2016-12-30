@@ -61,6 +61,7 @@
                         android:layout_height="wrap_content"
                         android:divider="@drawable/card_vertical_divider"
                         android:showDividers="beginning|end"
+                        android:layerType="software"
                         android:orientation="vertical">
 
                         <LinearLayout
