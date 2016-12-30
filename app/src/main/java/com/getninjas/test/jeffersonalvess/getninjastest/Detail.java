@@ -17,14 +17,14 @@ public class Detail {
     private String city;
     private String neighborhood;
     private String uf;
-    private float geoLatitude;
-    private float geoLongitude;
+    private double geoLatitude;
+    private double geoLongitude;
     private String linkAccept;
     private String linkReject;
 
     public Detail() {}
 
-    public Detail(int distance, int leadPrice, String title, ArrayList<Info> info, String name, String email, String phone, String city, String neighborhood, String uf, float geoLatitude, float geoLongitude, String linkAccept, String linkReject) {
+    public Detail(int distance, int leadPrice, String title, ArrayList<Info> info, String name, String email, String phone, String city, String neighborhood, String uf, double geoLatitude, double geoLongitude, String linkAccept, String linkReject) {
         this.distance = distance;
         this.leadPrice = leadPrice;
         this.title = title;
@@ -121,19 +121,19 @@ public class Detail {
         this.uf = uf;
     }
 
-    public float getGeoLatitude() {
+    public double getGeoLatitude() {
         return geoLatitude;
     }
 
-    public void setGeoLatitude(float geoLatitude) {
+    public void setGeoLatitude(double geoLatitude) {
         this.geoLatitude = geoLatitude;
     }
 
-    public float getGeoLongitude() {
+    public double getGeoLongitude() {
         return geoLongitude;
     }
 
-    public void setGeoLongitude(float geoLongitude) {
+    public void setGeoLongitude(double geoLongitude) {
         this.geoLongitude = geoLongitude;
     }
 

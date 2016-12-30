@@ -20,6 +20,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,10 +39,12 @@ import java.util.concurrent.ExecutionException;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements OnMapReadyCallback  {
 
     Detail details;
     String from = "";
+    private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +74,22 @@ public class DetailsActivity extends AppCompatActivity {
         //  Configuring the buttons on screen's bottom
         inflateBottomButtons();
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        LatLng lg = new LatLng(details.getGeoLatitude(), details.getGeoLongitude());
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(lg, 16.4f));
+        map.addCircle(new CircleOptions()
+                .center(lg)
+                .radius(80)
+                .strokeWidth(0f)
+                .fillColor(0x5500B0FF));
+
     }
 
     public Detail getDetailsInfo(String uri) {
@@ -82,8 +108,8 @@ public class DetailsActivity extends AppCompatActivity {
             detail.setCity(json.getJSONObject("_embedded").getJSONObject("address").optString("city"));
             detail.setNeighborhood(json.getJSONObject("_embedded").getJSONObject("address").optString("neighborhood"));
             detail.setUf(json.getJSONObject("_embedded").getJSONObject("address").optString("uf"));
-            detail.setGeoLatitude(json.getJSONObject("_embedded").getJSONObject("address").getJSONObject("geolocation").optLong("latitude"));
-            detail.setGeoLongitude(json.getJSONObject("_embedded").getJSONObject("address").getJSONObject("geolocation").optLong("longitude"));
+            detail.setGeoLatitude(json.getJSONObject("_embedded").getJSONObject("address").getJSONObject("geolocation").optDouble("latitude"));
+            detail.setGeoLongitude(json.getJSONObject("_embedded").getJSONObject("address").getJSONObject("geolocation").optDouble("longitude"));
 
             if (from.equals("Offer")) {
                 detail.setLinkAccept(json.getJSONObject("_links").getJSONObject("accept").getString("href"));
@@ -267,5 +293,4 @@ public class DetailsActivity extends AppCompatActivity {
             });
         }
     }
-
 }

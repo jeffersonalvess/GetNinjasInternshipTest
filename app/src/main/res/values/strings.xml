@@ -3,4 +3,5 @@
     <string name="fragment_offers_test">Hello offers fragment</string>
     <string name="fragment_leads_test">Hello leads fragment</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">AIzaSyABsU4tkPCmLxKvbJ2RPflrhcZiDmmVP-Y</string>
 </resources>
