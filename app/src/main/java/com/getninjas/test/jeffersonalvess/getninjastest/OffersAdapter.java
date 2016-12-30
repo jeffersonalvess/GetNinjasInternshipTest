@@ -1,6 +1,7 @@
 package com.getninjas.test.jeffersonalvess.getninjastest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
@@ -60,8 +61,10 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 //  We can access the data within the views
-                //  Try to get an list item from mOffers
-                Toast.makeText(context, "Touched " + position, Toast.LENGTH_SHORT).show();
+                //  TODO: Implement a way to send data to this activity
+                //  TODO: Replicate this code into LeadsAdapter
+                Intent intent = new Intent(context, DetailsActivity.class);
+                context.startActivity(intent);
             }
         }
     }

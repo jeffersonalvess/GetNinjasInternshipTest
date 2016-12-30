@@ -8,4 +8,5 @@
     <color name="navigationBarColor">#000000</color>
     <color name="colorDisabled">#cbcbcb</color>
     <color name="cardText">#424242</color>
+    <color name="detailsClient">#4ec6fe</color>
 </resources>
