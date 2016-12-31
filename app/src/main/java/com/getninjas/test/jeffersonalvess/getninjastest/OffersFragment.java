@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,15 +25,16 @@ import java.util.concurrent.ExecutionException;
 public class OffersFragment extends Fragment {
 
     ArrayList<Offer> offers;
+    OffersAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
+
 
     public OffersFragment(){
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,23 +51,50 @@ public class OffersFragment extends Fragment {
 
         try {
             offers = Offer.createOffersList("https://testemobile.getninjas.com.br/offers");
-            OffersAdapter adapter = new OffersAdapter(getActivity(), offers);
+            adapter = new OffersAdapter(getActivity(), offers);
             rvOffers.setAdapter(adapter);
             rvOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
+        //  Pull to refresh
+        swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipeRefreshLayoutOffer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                try {
+                    fetchTimelineAsync(0, "https://testemobile.getninjas.com.br/offers");
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+    }
+
+    public void fetchTimelineAsync(int page, String link) throws InterruptedException, ExecutionException, JSONException, IOException {
+
+        //  Clear the adapter
+        adapter.clear();
+
+        //  Get the new DataArray
+        offers = Offer.createOffersList(link);
+        adapter.addAll(offers);
+
+        //  Set refresh as done
+        swipeContainer.setRefreshing(false);
 
     }
 }

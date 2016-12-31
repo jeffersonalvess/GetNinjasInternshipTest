@@ -136,6 +136,16 @@ public class OffersAdapter extends RecyclerView.Adapter<OffersAdapter.ViewHolder
 
     }
 
+    public void clear() {
+        mOffers.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Offer> offers) {
+        mOffers.addAll(offers);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mOffers.size();

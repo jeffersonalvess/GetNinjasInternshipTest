@@ -131,6 +131,16 @@ public class LeadsAdapter extends RecyclerView.Adapter<LeadsAdapter.ViewHolder> 
         imgViewLocation.setColorFilter(primaryColor);
     }
 
+    public void clear() {
+        mLeads.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Lead> leads) {
+        mLeads.addAll(leads);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mLeads.size();
