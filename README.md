@@ -21,7 +21,7 @@ The app counts with:
 
 App's Goal
 -------------
-Get the internship position *crossed fingers*
+To get the internship position  * **crossed fingers** *
 
 
 Content
