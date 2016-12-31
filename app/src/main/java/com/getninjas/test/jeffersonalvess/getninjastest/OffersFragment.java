@@ -28,6 +28,8 @@ public class OffersFragment extends Fragment {
     OffersAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
 
+    private String URI, rURI;
+
 
     public OffersFragment(){
         // Required empty public constructor
@@ -37,9 +39,10 @@ public class OffersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        URI = getArguments().getString("URI");
+        rURI = getArguments().getString("rURI");
         return inflater.inflate(R.layout.fragment_offers, container, false);
     }
 
@@ -50,7 +53,7 @@ public class OffersFragment extends Fragment {
         RecyclerView rvOffers = (RecyclerView) getView().findViewById(R.id.recycler_view);
 
         try {
-            offers = Offer.createOffersList("https://testemobile.getninjas.com.br/offers");
+            offers = Offer.createOffersList(URI);
             adapter = new OffersAdapter(getActivity(), offers);
             rvOffers.setAdapter(adapter);
             rvOffers.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -67,7 +70,7 @@ public class OffersFragment extends Fragment {
             public void onRefresh() {
 
                 try {
-                    fetchTimelineAsync(0, "https://testemobile.getninjas.com.br/offers");
+                    fetchTimelineAsync(0, rURI);
                 }
                 catch (Exception e) {
                     e.printStackTrace();

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import org.json.JSONObject;
+
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private String offersURI, leadsURI, rOffersURI, rLeadsURI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,32 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //  Getting the first information from the REST API
+        String baseURI = "https://testemobile.getninjas.com.br";
+
+        try
+        {
+            JSONObject json = new RetrieveJSONTask().execute(baseURI).get();
+            offersURI = json.getJSONObject("_links").getJSONObject("offers").optString("href");
+            leadsURI = json.getJSONObject("_links").getJSONObject("leads").optString("href");
+
+            //  There is a problem with the data received from the request.
+            //  The correct URL is under https, but the JSON data is typed as HTTP
+            //  Due a time constraint this change will be made by hardconding the feature
+
+            offersURI = offersURI.replace("http", "https");
+            leadsURI = leadsURI.replace("http", "https");
+
+            json = new RetrieveJSONTask().execute(offersURI).get();
+            rOffersURI = json.getJSONObject("_links").getJSONObject("self").optString("href");
+
+            json = new RetrieveJSONTask().execute(leadsURI).get();
+            rLeadsURI = json.getJSONObject("_links").getJSONObject("self").optString("href");
+        }
+        catch (Exception e)
+        {}
+
+        //  Setup tabbed layout
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -39,13 +69,32 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_tab_offers);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_tab_leads);
 
+
+
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OffersFragment(), "DISPONÍVEIS");
-        adapter.addFragment(new LeadsFragment(), "ACEITOS");
+        Bundle offerBundle = new Bundle();
+        Bundle leadBundle = new Bundle();
+
+        offerBundle.putString("URI", offersURI);
+        offerBundle.putString("rURI", rOffersURI);
+
+        leadBundle.putString("URI", leadsURI);
+        leadBundle.putString("rURI", rLeadsURI);
+
+        OffersFragment offersFragment = new OffersFragment();
+        offersFragment.setArguments(offerBundle);
+
+        LeadsFragment leadsFragment = new LeadsFragment();
+        leadsFragment.setArguments(leadBundle);
+
+        adapter.addFragment(offersFragment, "AVAILABLE");
+        adapter.addFragment(leadsFragment, "ACCEPTED");
         viewPager.setAdapter(adapter);
 
     }

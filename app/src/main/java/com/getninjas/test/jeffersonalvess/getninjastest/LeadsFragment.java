@@ -26,6 +26,8 @@ public class LeadsFragment extends Fragment {
     LeadsAdapter adapter;
     private SwipeRefreshLayout swipeContainer;
 
+    private String URI, rURI;
+
     public LeadsFragment() {
         // Required empty public constructor
     }
@@ -36,9 +38,10 @@ public class LeadsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        URI = getArguments().getString("URI");
+        rURI = getArguments().getString("rURI");
         return inflater.inflate(R.layout.fragment_leads, container, false);
     }
 
@@ -49,7 +52,7 @@ public class LeadsFragment extends Fragment {
         RecyclerView rvLeads = (RecyclerView) getView().findViewById(R.id.recycler_view);
 
         try {
-            leads = Lead.createOffersList("https://testemobile.getninjas.com.br/leads");
+            leads = Lead.createOffersList(URI);
             adapter = new LeadsAdapter(getActivity(), leads);
             rvLeads.setAdapter(adapter);
             rvLeads.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -66,7 +69,7 @@ public class LeadsFragment extends Fragment {
             public void onRefresh() {
 
                 try {
-                    fetchTimelineAsync(0, "https://testemobile.getninjas.com.br/leads");
+                    fetchTimelineAsync(0, rURI);
                 }
                 catch (Exception e) {
                     e.printStackTrace();
