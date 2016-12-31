@@ -89,7 +89,6 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                 .radius(80)
                 .strokeWidth(0f)
                 .fillColor(0x5500B0FF));
-
     }
 
     public Detail getDetailsInfo(String uri) {
