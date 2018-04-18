@@ -11,7 +11,8 @@ The app has a list of job `offers`, which a pro can accept or reject.
 
 When an `offer` is accepted, it becomes a `lead`. The main difference between a `lead` and an `offer` is that a `lead` has customer contacts, and `offer` does not.
 
-The app counts with:
+>The app counts with:
+>
 > - Offer and Leads lists;
 > - Details Page;
 > - Rest API implementation;
