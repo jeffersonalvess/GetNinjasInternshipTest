@@ -1,6 +1,6 @@
-<center>
-![logo](https://cloud.githubusercontent.com/assets/7515790/21575755/e37de152-cefe-11e6-9f4c-75c876618b42.jpg)
-</center>
+<p align="center">
+  <img height="200" src="https://cloud.githubusercontent.com/assets/7515790/21575755/e37de152-cefe-11e6-9f4c-75c876618b42.jpg">
+</p>
 
 GetNinjasInternshipTest is an Android app developed as a test for an Anroid developer internship position at GetNinjas.
 
@@ -26,7 +26,7 @@ To get the internship position  * *crossed fingers* *
 
 Content
 -------------
-####Screenshots
+#### Screenshots
 ![appscreens](https://cloud.githubusercontent.com/assets/7515790/21575829/b49cd764-cf01-11e6-9959-0138651c236e.png)
 
 
